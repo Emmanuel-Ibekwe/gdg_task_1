@@ -14,6 +14,11 @@ exports.getProfile = async (req, res, next) => {
 exports.postProfile = async (req, res, next) => {
   try {
     const { name, email, phone, track, github } = req.body;
+    if (!name || !email || !phone || !track || !github) {
+      const error = new Error("fill all fields");
+      error.status = 400;
+      throw error;
+    }
 
     const data = { name, email, phone, track, github };
     res.status(200).json({ message: "profile set successfully", data });
